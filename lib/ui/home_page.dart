@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                     );
                   default:
                     if(snapshot.hasError) return Container();
-                    else _createGifTable(context, snapshot);
+                    else return _createGifTable(context, snapshot);
                 }
               }
             )
@@ -83,6 +83,23 @@ class _HomePageState extends State<HomePage> {
     );
   }
   Widget _createGifTable(BuildContext context, AsyncSnapshot snapshot){
-    
+    return GridView.builder(
+      padding: EdgeInsets.all(10.0),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2, 
+        crossAxisSpacing: 10.0,
+        mainAxisSpacing: 10.0
+      ),
+      itemCount: 25, 
+      itemBuilder: (context, index){
+        return GestureDetector(
+          child: Image.network(
+            snapshot.data["data"][index]["images"]["fixed_height"]["url"],
+            height: 300.0,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    );
   }
 }
